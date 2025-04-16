@@ -33,8 +33,17 @@ class CountryResource extends Resource
     {
         return $form
             ->schema([
-                //
-            ]);
+                Forms\Components\TextInput::make('code')
+                    ->required()
+                    ->maxLength(3)
+                    ->numeric(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('phone_code')
+                    ->required()
+                    ->maxLength(5),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

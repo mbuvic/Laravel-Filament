@@ -17,7 +17,7 @@ class CountyResource extends Resource
 {
     protected static ?string $model = County::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
+    protected static ?string $navigationIcon = 'heroicon-o-building-library';
 
     protected static ?string $navigationLabel = 'County';
 
@@ -29,13 +29,16 @@ class CountyResource extends Resource
 
     protected static ?string $slug = 'employee-counties';
 
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('country_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('country_id')
+                    ->relationship(name: 'country', titleAttribute: 'name')
+                    ->searchable(true)
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required(),
             ]);

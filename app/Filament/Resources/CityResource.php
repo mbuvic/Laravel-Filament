@@ -32,9 +32,11 @@ class CityResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('county_id')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('county_id')
+                    ->relationship(name: 'county', titleAttribute: 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required(),
             ]);

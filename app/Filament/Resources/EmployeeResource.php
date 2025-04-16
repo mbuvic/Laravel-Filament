@@ -3,15 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\EmployeeResource\Pages;
-use App\Filament\Resources\EmployeeResource\RelationManagers;
+use App\Models\City;
+use App\Models\County;
 use App\Models\Employee;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
 
 class EmployeeResource extends Resource
 {
@@ -26,6 +28,43 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\Section::make('User Location')
+                ->description('Put ther user location details here.')
+                ->schema([
+                    Forms\Components\Select::make('country_id')
+                        ->relationship(name: 'country', titleAttribute: 'name')
+                        ->searchable(true)
+                        ->preload()
+                        ->live()
+                        ->afterStateUpdated(function (Set $set) {
+                            $set('city_id', null);
+                            $set('county_id', null);
+                        })
+                        ->required(),
+                    Forms\Components\Select::make('county_id')
+                        ->options(fn (Get $get): Collection => County::query()
+                            ->where('country_id', $get('country_id'))
+                            ->pluck('name', 'id')
+                            ->prepend('Select a county', '')
+                        )
+                        ->live()
+                        ->afterStateUpdated(fn (Set $set) => $set('city_id', null))
+                        ->searchable()
+                        ->required(),
+                    Forms\Components\Select::make('city_id')
+                        ->options(fn (Get $get): Collection => City::query()
+                            ->where('county_id', $get('county_id'))
+                            ->pluck('name', 'id')
+                            ->prepend('Select a city', '')
+                        )
+                    ->searchable()
+                    ->required(),
+                    Forms\Components\Select::make('department_id')
+                        ->relationship(name: 'department', titleAttribute: 'name')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+                ])->columns(2),
                 Forms\Components\Section::make('User Name')
                 ->description('Put ther user name details here.')
                 ->schema([
