@@ -46,7 +46,7 @@ class CityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('county_id')
+                Tables\Columns\TextColumn::make('county.name')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
