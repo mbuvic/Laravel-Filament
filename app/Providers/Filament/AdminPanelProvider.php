@@ -28,8 +28,19 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                'primary' => Color::Amber,
+                'danger' => Color::Rose,
+                'gray' => Color::Gray,
+                'info' => Color::Blue,
+                'primary' => Color::Indigo,
+                'success' => Color::Emerald,
+                'warning' => Color::Orange,
             ])
+            ->font('Dosis')
+            ->brandName('BrightGrid Web Systems')
+            ->brandLogo(asset('images/LogoBlackBG.png'))
+            ->darkModeBrandLogo(asset('images/LogoWhiteBG.png'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('images/fav.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([

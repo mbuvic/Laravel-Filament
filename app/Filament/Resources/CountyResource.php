@@ -17,7 +17,7 @@ class CountyResource extends Resource
 {
     protected static ?string $model = County::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-flag';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-path-rounded-square';
 
     protected static ?string $navigationLabel = 'County';
 
