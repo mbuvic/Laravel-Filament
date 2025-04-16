@@ -87,9 +87,13 @@ class EmployeeResource extends Resource
                 ->description('Put ther user date details here.')
                 ->schema([
                     Forms\Components\DatePicker::make('date_of_birth')
-                    ->required(),
+                        ->maxDate('today')
+                        ->native(false)
+                        ->required(),
                     Forms\Components\DatePicker::make('date_hired')
-                    ->required(),
+                        ->maxDate('today')
+                        ->native(false)
+                        ->required(),
                 ])->columns(2)
             ]);
     }
@@ -98,23 +102,14 @@ class EmployeeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('country_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('county_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('city_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('department_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('first_name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('middle_name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable(),
