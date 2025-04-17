@@ -29,5 +29,8 @@ class DatabaseSeeder extends Seeder
 
         //run cities seeder
         $this->call(CitySeeder::class);
+
+        //run users seeder
+        $this->call(UserSeeder::class);
     }
 }
