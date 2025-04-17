@@ -7,6 +7,9 @@ use App\Filament\Resources\CountryResource\RelationManagers;
 use App\Models\Country;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -35,8 +38,7 @@ class CountryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('code')
                     ->required()
-                    ->maxLength(3)
-                    ->numeric(),
+                    ->maxLength(3),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -50,18 +52,60 @@ class CountryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Country Code')
+                    ->sortable()
+                    ->searchable(isIndividual:true),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Country Name')
+                    ->searchable(isIndividual:true),
+                Tables\Columns\TextColumn::make('phone_code')
+                    ->label('Phone Code')
+                    ->prefix('+') 
+                    ->searchable(isIndividual:true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+            ]);
+    }
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Country Details')
+                    ->schema([
+                        TextEntry::make('code')
+                            ->label('Country Code'),
+                        TextEntry::make('name')
+                            ->label('Country Name'),
+                        TextEntry::make('phone_code')
+                            ->label('Phone Code'),
+                    ])->columns(3),
+                Section::make('Timestamps')
+                    ->schema([
+                        TextEntry::make('created_at')
+                            ->label('Created Date'),
+                        TextEntry::make('updated_at')
+                            ->label('Last Modified Date'),
+                    ])->columns(2)
             ]);
     }
 
