@@ -5,6 +5,8 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\CountryResource\RelationManagers\CountiesRelationManager;
 use App\Filament\Resources\CountyResource\Pages;
 use App\Filament\Resources\CountyResource\RelationManagers;
+use App\Filament\Resources\CountyResource\RelationManagers\CitiesRelationManager;
+use App\Filament\Resources\CountyResource\RelationManagers\EmployeesRelationManager;
 use App\Models\County;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -113,7 +115,8 @@ class CountyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            CitiesRelationManager::class,
+            EmployeesRelationManager::class,
         ];
     }
 
