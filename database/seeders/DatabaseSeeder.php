@@ -32,5 +32,11 @@ class DatabaseSeeder extends Seeder
 
         //run users seeder
         $this->call(UserSeeder::class);
+
+        //run departments seeder
+        $this->call(DepartmentSeeder::class);
+
+        //run employees seeder
+        $this->call(EmployeeSeeder::class);
     }
 }

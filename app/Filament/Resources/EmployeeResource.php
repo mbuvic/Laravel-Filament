@@ -119,19 +119,23 @@ class EmployeeResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('first_name')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('last_name')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('middle_name')
                     ->sortable()
                     ->searchable()
+                    ->searchable(isIndividual: true)
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('address')
                     ->searchable()
+                    ->searchable(isIndividual: true)
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('zip_code')
-                    ->searchable(),
+                    ->searchable()
+                    ->searchable(isIndividual: true),
                 Tables\Columns\TextColumn::make('date_of_birth')
                     ->date()
                     ->sortable()

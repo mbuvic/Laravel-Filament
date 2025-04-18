@@ -66,6 +66,58 @@ class ListEmployees extends ListRecords
                         now()->subYear()->startOfYear(),
                         now()->subYear()->endOfYear()
                     ])->count()),
+            //last 3 years
+            'last3Years' => Tab::make('Last 3 Years')
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereBetween('date_hired', [
+                        now()->subYears(3)->startOfYear(),
+                        now()->endOfYear(),
+                    ])
+                )
+                ->badge(Employee::query()
+                    ->whereBetween('date_hired', [
+                        now()->subYears(3)->startOfYear(),
+                        now()->endOfYear()
+                    ])->count()),
+            //last 5 years
+            'last5Years' => Tab::make('Last 5 Years')
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereBetween('date_hired', [
+                        now()->subYears(5)->startOfYear(),
+                        now()->endOfYear(),
+                    ])
+                )
+                ->badge(Employee::query()
+                    ->whereBetween('date_hired', [
+                        now()->subYears(5)->startOfYear(),
+                        now()->endOfYear()
+                    ])->count()),
+            //last 10 years
+            'last10Years' => Tab::make('Last 10 Years')
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereBetween('date_hired', [
+                        now()->subYears(10)->startOfYear(),
+                        now()->endOfYear(),
+                    ])
+                )
+                ->badge(Employee::query()
+                    ->whereBetween('date_hired', [
+                        now()->subYears(10)->startOfYear(),
+                        now()->endOfYear()
+                    ])->count()),
+            //last 20 years
+            'last20Years' => Tab::make('Last 20 Years')
+                ->modifyQueryUsing(fn (Builder $query) => $query
+                    ->whereBetween('date_hired', [
+                        now()->subYears(20)->startOfYear(),
+                        now()->endOfYear(),
+                    ])
+                )
+                ->badge(Employee::query()
+                    ->whereBetween('date_hired', [
+                        now()->subYears(20)->startOfYear(),
+                        now()->endOfYear()
+                    ])->count()),
         ];
         
     }
