@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\CountyResource\RelationManagers;
+namespace App\Filament\Resources\DepartmentResource\RelationManagers;
 
 use App\Models\City;
 use App\Models\County;
