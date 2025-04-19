@@ -14,6 +14,7 @@ use Filament\Forms\Set;
 use Filament\Infolists\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Enums\FiltersLayout;
@@ -266,6 +267,18 @@ class EmployeeResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->modalHeading('Delete Employee')
+                    ->modalDescription('Are you sure you want to permanently delete this employee? This cannot be undone.')
+                    ->modalSubmitActionLabel('Yes, delete')
+                    ->modalCancelActionLabel('No, Keep')
+                    ->modalIcon('heroicon-o-trash')
+                    ->successNotification(
+                        Notification::make()
+                            ->success()
+                            ->title('Delete Success')
+                            ->body('The employee has been deleted successfully.')
+                    ),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
