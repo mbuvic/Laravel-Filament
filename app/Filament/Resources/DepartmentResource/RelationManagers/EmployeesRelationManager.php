@@ -130,10 +130,6 @@ class EmployeesRelationManager extends RelationManager
             Tables\Columns\TextColumn::make('date_hired')
                 ->date()
                 ->sortable(),
-            Tables\Columns\TextColumn::make('department.name')
-                ->label('Department Name')
-                ->searchable()
-                ->sortable(),
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
                 ->sortable()

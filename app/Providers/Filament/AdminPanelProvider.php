@@ -36,6 +36,11 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
             ->font('Dosis')
+            ->navigationGroups([
+                'Employee Management',
+                'System Management',
+                'User Management'
+            ])
             ->brandName('BrightGrid Web Systems')
             ->brandLogo(asset('images/LogoBlackBG.png'))
             ->darkModeBrandLogo(asset('images/LogoWhiteBG.png'))

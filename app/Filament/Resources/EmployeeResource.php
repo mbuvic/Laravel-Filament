@@ -16,14 +16,15 @@ use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\Column;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Indicator;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class EmployeeResource extends Resource
@@ -34,6 +35,62 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationGroup = 'Employee Management';
 
+    protected static ?string $recordTitleAttribute = 'first_name';
+
+    public static function getGlobalSearchResultTitle(Model $record): string|Htmlable
+    {    
+        return "{$record->first_name} {$record->last_name} {$record->middle_name}";
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'first_name',
+            'last_name',
+            'middle_name',
+        ];
+    }
+
+    public static function getGlobalSearchResultDetails(Model $record): array
+    {
+        $dob = Carbon::parse($record->date_of_birth)->format('M j, Y');
+        $doh = Carbon::parse($record->date_hired)   ->format('M j, Y');
+
+        return [
+            'Country'       => $record->country->name,
+            'Department'    => $record->department->name,
+            'Date of Birth' => $dob,
+            'Date Hired'    => $doh,
+        ];
+    }
+
+    public static function getGlobalSearchEloquentQuery(): Builder
+    {
+        return parent::getGlobalSearchEloquentQuery()
+            ->with(['country', 'department']);
+    }
+
+    protected static ?int $cachedCount = null;
+
+    protected static function getCachedCount(): int
+    {
+        if (is_null(static::$cachedCount)) {
+            static::$cachedCount = static::getModel()::count();
+        }
+    
+        return static::$cachedCount;
+    }
+    
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getCachedCount(), 0);
+    }
+    
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getCachedCount() > 500000 ? 'success' : 'warning';
+    }
+    
 
     public static function form(Form $form): Form
     {

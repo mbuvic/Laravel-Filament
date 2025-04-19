@@ -21,6 +21,27 @@ class UserResource extends Resource
 
     protected static ?string $navigationGroup = 'User Management';
 
+    protected static ?int $cachedCount = null;
+
+    protected static function getCachedCount(): int
+    {
+        if (is_null(static::$cachedCount)) {
+            static::$cachedCount = static::getModel()::count();
+        }
+    
+        return static::$cachedCount;
+    }
+    
+    public static function getNavigationBadge(): ?string
+    {
+        return number_format(static::getCachedCount(), 0);
+    }
+    
+    public static function getNavigationBadgeColor(): string|array|null
+    {
+        return static::getCachedCount() > 1 ? 'success' : 'warning';
+    }
+
 
     public static function form(Form $form): Form
     {
