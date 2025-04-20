@@ -214,6 +214,7 @@ class EmployeeResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->paginated([5, 10, 25, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 'all'])
             ->filters([
                 SelectFilter::make('Department')
                     ->relationship('department', 'name')
